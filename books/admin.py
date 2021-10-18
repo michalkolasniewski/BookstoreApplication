@@ -1,36 +1,27 @@
 from django.contrib import admin
 
-# Register your models here.
-from books.models import IndustryIdentifiers, SaleInfo, Book, ReadingModes
-
-
-@admin.register(IndustryIdentifiers)
-class IndustryIdentifiersAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(ReadingModes)
-class ReadingModesAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(SaleInfo)
-class SaleInfoAdmin(admin.ModelAdmin):
-    pass
+from books.models import Book
 
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    fields = [
-        ('title',
-         'authors',
-         'published_date',
-         'industry_identifiers',
-         'reading_modes',
-         'page_count',
-         'print_type',
-         'average_rating',
-         'ratings_count',
-         'language',
-         'sale_info')
+    list_display = ['title', 'authors', 'published_date', 'page_count']
+    fields = ['title',
+              'authors',
+              'published_date',
+              'page_count',
+              'print_type',
+              'categories',
+              'average_rating',
+              'ratings_count',
+              'language',
+              'country',
+              'saleability',
+              'is_ebook',
+              'type',
+              'identifier',
+              'text',
+              'image',
+              'is_pdf',
+              'is_epub',
     ]

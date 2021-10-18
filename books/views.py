@@ -1,23 +1,28 @@
-from rest_framework import viewsets, exceptions
+from django.http import HttpResponse
+from rest_framework import viewsets
+
 
 from books.models import Book
-from books.serializers import BookSerializer, DetailBookSerializer
+from books.serializers import BookSerializer
 
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all().order_by('id')
     serializer_class = BookSerializer
-    detail_serializer_class = DetailBookSerializer
 
-    filter_fields = ['id', 'title']
+    filter_fields = ['title', 'published_date']
+    search_fields = ['title', 'published_date']
 
-    # def get_serializer_class(self):
-    #     if self.action == 'retrieve':
-    #         return self.detail_serializer_class
-    #     else:
-    #         return self.serializer_class
+    def destroy(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
 
-    def retrieve(self, request, *args, **kwargs):
-        self.serializer_class = self.detail_serializer_class
-        return super().retrieve(request, *args, **kwargs)
+        return super().destroy(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponse('Unauthorized', status=401)
+        return super().create(request, *args, **kwargs)
+
+
 
