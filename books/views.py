@@ -25,4 +25,6 @@ class BookViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 
+class BookListView(viewsets.ModelViewSet):
+    pass
 
