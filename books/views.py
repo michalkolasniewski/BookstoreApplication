@@ -23,8 +23,3 @@ class BookViewSet(viewsets.ModelViewSet):
         if not request.user.is_authenticated:
             return HttpResponse('Unauthorized', status=401)
         return super().create(request, *args, **kwargs)
-
-
-class BookListView(viewsets.ModelViewSet):
-    pass
-
